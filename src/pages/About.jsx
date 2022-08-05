@@ -22,8 +22,8 @@ const About = () => {
       height: "91vh",
     }}> 
       <div style={{display: 'flex', flexDirection: 'column',alignItems: 'center',justifyContent: 'center',height:"90vh",}}>
-      <Card sx={{ width: 500,height:"70vh",borderRadius:"50%",background:"yellow"}}>
-      <CardActionArea sx={{textAlign:"center",background:"yellow"}}>
+      <Card sx={{ width: 500,height:"70vh",borderRadius:"50%",}}>
+      <CardActionArea sx={{textAlign:"center",}}>
         <img src={gif} width="50%" height="50%" alt="gif"  />
         <CardContent>
           <Typography gutterBottom variant="h2" component="div" sx={{fontFamily: "fantasy",}}>
@@ -33,9 +33,9 @@ const About = () => {
           I"m a Frontend Web Developer with a passion for learning and building new things.
           </Typography>
           <Typography variant="h6" color="text.secondary" sx={{padding:"10px"}}>
-          <a href={text} target="_blank" rel="noopener noreferrer" style={{textDecoration:"none",color:"black",}}> {text}</a>
+          <a href={text} target="_blank" rel="noopener noreferrer" style={{textDecoration:"none",color:"red", fontWeight:"bold"}}> {text}</a>
           </Typography>
-          <IconButton onClick={()=>setText("https://www.linkedin.com/in/erhan-tezer/")}>
+          <IconButton onClick={()=>setText("https://www.linkedin.com/in/erhan-tezer")}>
             <LinkedInIcon sx={{color: "black",fontSize:35}}/>
             </IconButton>
             <IconButton onClick={()=>setText("erhantezer68@gmail.com")}>
