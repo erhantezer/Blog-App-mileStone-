@@ -24,7 +24,7 @@ const About = () => {
       <div style={{display: 'flex', flexDirection: 'column',alignItems: 'center',justifyContent: 'center',height:"90vh",}}>
       <Card sx={{ width: 500,height:"70vh",borderRadius:"50%",}}>
       <CardActionArea sx={{textAlign:"center",}}>
-        <img src={[]} width="50%" height="50%" alt="gif" style={{margin:"8px"}} />
+        <img src={gif} width="50%" height="50%" alt="gif" style={{margin:"8px"}} />
         <CardContent>
           <Typography gutterBottom variant="h2" component="div" sx={{fontFamily: "fantasy",}}>
            Erhan TEZER

@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 
-const AuthContext = () => {
+export const AuthContext = createContext()
+
+const AuthContextProvider = () => {
+  const [currentUser, setCurrentUser] = useState()
+
+    useEffect(() => {
+        // useObserver(setCurrentUser)
+    },[])
+
   return (
-    <div>AuthContext</div>
+    <AuthContext.Provider value={{currentUser}}>
+        {props.children}
+    </AuthContext.Provider>
   )
 }
 
-export default AuthContext
+export default AuthContextProvider
