@@ -10,7 +10,7 @@ import NewBlog from '../pages/NewBlog';
 import Details from '../pages/Details';
 import UpdateBlog from '../pages/UpdateBlog';
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 
 
 const AppRouter = () => {
@@ -38,7 +38,7 @@ const AppRouter = () => {
         </Route>
         
     </Routes>
-    <Footer/>
+   
     </BrowserRouter>
     </>
   )
