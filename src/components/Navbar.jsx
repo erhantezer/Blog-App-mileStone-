@@ -47,18 +47,7 @@ export default function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      {/* <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? 'Logout' : 'Login'}
-        />
-      </FormGroup> */}
+   
       <AppBar position="static">
         <Toolbar>
        
