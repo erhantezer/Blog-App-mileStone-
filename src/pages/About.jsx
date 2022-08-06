@@ -22,7 +22,7 @@ const About = () => {
       height: "91vh",
     }}> 
       <div style={{display: 'flex', flexDirection: 'column',alignItems: 'center',justifyContent: 'center',height:"90vh",}}>
-      <Card sx={{ width: 500,height:"70vh",borderRadius:"50%",}}>
+      <Card sx={{ width: 360,height:"70vh"}}>
       <CardActionArea sx={{textAlign:"center",}}>
         <img src={gif} width="50%" height="50%" alt="gif" style={{margin:"8px"}} />
         <CardContent>

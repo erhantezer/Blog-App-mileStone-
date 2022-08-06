@@ -1,9 +1,9 @@
 import { initializeApp } from "firebase/app";
-import {getAuth} from "firebase/auth";
-// import {
-//   toastErrorNotify,
-//   toastSuccessNotify,
-// } from "./ToastNotify";
+import {createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile} from "firebase/auth";
+import {
+  toastErrorNotify,
+  toastSuccessNotify,
+} from "./ToastNotify";
 
 
 
@@ -21,3 +21,53 @@ const firebaseConfig = {
   // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+
+export const creatUser = async (email,password,navigate,displayName) => {
+  try {
+    await createUserWithEmailAndPassword (auth, email, password);
+    await updateProfile(auth.currentUser, {displayName:displayName})
+    toastSuccessNotify("User Registered Successfuly")
+    navigate("/")
+  } catch (error) {
+    toastErrorNotify(error.message)
+  }
+}
+
+export const signIn = async (email, password, navigate)=> {
+  try {
+    let userCredential = await signInWithEmailAndPassword(auth, email, password);
+    console.log(userCredential);
+    toastSuccessNotify("User Login Successfully")
+    navigate("/")
+  } catch (error) {
+    toastErrorNotify(error.message)
+  }
+}
+
+export const userObserver = (setCurrentUser) => {
+  onAuthStateChanged(auth, (currentUser) => {
+    if(currentUser){
+      setCurrentUser(currentUser)
+    }else {
+      setCurrentUser(false)
+    }
+  })
+}
+
+export const logOut = () => {
+  signOut(auth);
+  toastSuccessNotify("Logout Successfully")
+}
+
+export const signUpProvider = (navigate) => {
+  const provider = new GoogleAuthProvider();
+  signInWithPopup(auth, provider)
+  .then((result)=> {
+    console.log(result)
+    toastSuccessNotify("User login successfully")
+    navigate("/")
+  }).catch((error) => {
+    toastErrorNotify(error.message)
+    });
+  
+}
