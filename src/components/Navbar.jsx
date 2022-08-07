@@ -4,57 +4,63 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { useNavigate } from 'react-router-dom';
+import { AuthContext } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useContext } from 'react';
+import { logOut } from '../helpers/firebase';
 
-export default function Navbar() {
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+export default function NavBar() {
+  const currentUser = useContext(AuthContext);
   const navigate = useNavigate()
-
-
+  // const [auth, setAuth] = React.useState(true);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = (e) => {
     setAnchorEl(null);
-    if(e.target.innerText === "Profile"){
-      console.log(e.target.innerText)
-      navigate("/profile")
-  }else if(e.target.innerText === "NewBlog"){
-      navigate("/newblog")
-  } else if(e.target.innerText === "Login"){
-      navigate("/login")
-      
-  } else if(e.target.innerText === "Logout"){
     
-      navigate("/")
-      
-  } else if(e.target.innerText === "Register") {
-      navigate("/register")
-  } else if(e.target.innerText === "About") {
-      navigate("/about")
-  }
+    if(e.target.innerText === "Profile"){
+        console.log(e.target.innerText)
+        navigate("/profile")
+    }else if(e.target.innerText === "NewBlog"){
+        navigate("/newblog")
+    } else if(e.target.innerText === "Login"){
+        navigate("/login")
+        
+    } else if(e.target.innerText === "Logout"){
+      logOut()
+        navigate("/")
+        
+    } else if(e.target.innerText === "Register") {
+        navigate("/register")
+    } else if(e.target.innerText === "About") {
+        navigate("/about")
+    }
 
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-   
-      <AppBar position="static">
+    <Box sx={{ flexGrow: 1 }} >
+     
+      <AppBar position="static" style={{cursor:"pointer"}} sx={{backgroundColor:"darkslategray"}}>
         <Toolbar>
-       
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Erhan TEZER Blog's
-          </Typography>
-          {auth && (
+            <Typography variant="h6" color="inherit" sx={{ flexGrow: 3,textAlign:"left"}} style={{marginLeft:"0px"}} onClick={()=>navigate("/")} >
+              Erhan Tezer Blog's
+            </Typography>
+          
+          {currentUser ? (
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1,textAlign:"end",paddingRight:"1rem"}} > 
+            {currentUser?.displayName.toUpperCase()}
+          </Typography>):
+          (<Typography variant="h6" component="div" sx={{ flexGrow: 1,textAlign:"end",paddingRight:"1rem" }}>
+          Guest
+        </Typography>)}
+          
             <div>
               <IconButton
                 size="large"
@@ -63,10 +69,16 @@ export default function Navbar() {
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit"
+                sx={{ flexGrow: 1,bgcolor:"white",color:"black",fontSize:40,width:"55px",height:"55px",marginLeft:"2px",'&:hover': {
+                  backgroundColor: 'black',
+                  color:"white",
+                  opacity: [0.9, 0.8, 0.7],
+                } }}
               >
-                <AccountCircle />
+                {currentUser ? currentUser.displayName[0].toUpperCase():<AccountCircle sx={{fontSize:55,width:"8vh",height:"8vh",color: "darkslategray"}}/> }
               </IconButton>
-              <Menu
+              {currentUser ? (<Menu
+              
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
@@ -81,13 +93,36 @@ export default function Navbar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Login</MenuItem>
-                <MenuItem onClick={handleClose}>Register</MenuItem>
-                <MenuItem onClick={handleClose}>About</MenuItem>
+                <MenuItem onClick={(e)=>handleClose(e)}>
+                    Profile
+                </MenuItem>
+                <MenuItem onClick={(e)=>handleClose(e)}>NewBlog</MenuItem>
+                <MenuItem onClick={(e)=>handleClose(e)}>About</MenuItem>
+                <MenuItem onClick={(e)=>handleClose(e)}>Logout</MenuItem>
                 
-              </Menu>
+              </Menu>):(<Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={(e)=>handleClose(e)}>
+                   Login
+                </MenuItem>
+                <MenuItem onClick={(e)=>handleClose(e)}>Register</MenuItem>
+                <MenuItem onClick={(e)=>handleClose(e)}>About</MenuItem>
+              </Menu>)}
             </div>
-          )}
+          
         </Toolbar>
       </AppBar>
     </Box>

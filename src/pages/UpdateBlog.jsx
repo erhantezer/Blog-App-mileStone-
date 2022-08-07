@@ -1,16 +1,37 @@
-import { createTheme, ThemeProvider } from '@mui/material';
+import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useContext } from 'react';
+import { BlogContext } from "../contexts/BlogContext";
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme();
 
 
-const UpdateBlog = () => {
+export default function UpdateBlog() {
+  const {info,setInfo,handleFormSubmit} = useContext(BlogContext);
+  const [inputVal,setInputVal] = React.useState(info)
+ const navigate = useNavigate()
+  const date = "date"
+  const handleChange = (e) => {
+    e.preventDefault();
+    const {name,value}=e.target
+    setInfo({...info,[name]:value,[date]:new Date().toLocaleString("en-US")})
+    setInputVal({...inputVal,[name]:value})
+    
+  };
+  
+  
+  const handleFormReset = (e) => {
+    e.preventDefault();
+    handleFormSubmit(e)
+    navigate("/")
+  }
   return (
     <div  style={{
       backgroundImage: 'url(https://source.unsplash.com/random)',
@@ -53,9 +74,9 @@ const UpdateBlog = () => {
               name="title"
               autoComplete="title"
               autoFocus
-              
+              onChange={handleChange}
               color="success"
-              
+              value={inputVal.title}
             />
             <TextField
               margin="normal"
@@ -65,9 +86,9 @@ const UpdateBlog = () => {
               label="Image URL"
               type="url"
               id="imageUrl"
-              
+              onChange={handleChange}
               color="success"
-              
+              value={inputVal.imageUrl}
             />
             
             <TextField
@@ -80,10 +101,10 @@ const UpdateBlog = () => {
               name="content"
               label="Content"
               id="content"
-             
+              onChange={handleChange}
               sx={{}}
               color="success"
-              
+              value={inputVal.content}
             />
             
             <Button
@@ -91,7 +112,7 @@ const UpdateBlog = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2,backgroundColor:"darkslategrey" }}
-              
+              onClick={(e)=>handleFormReset(e)}
             >
               Update Blog
             </Button>
@@ -101,7 +122,5 @@ const UpdateBlog = () => {
     </ThemeProvider>
     </div>
     </div>
-  )
+  );
 }
-
-export default UpdateBlog

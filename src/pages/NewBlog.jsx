@@ -1,20 +1,46 @@
-import { Box, Button, Container, createTheme, CssBaseline, TextField, ThemeProvider, Typography } from '@mui/material';
-import React from 'react'
-
-
-
-
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useContext } from 'react';
+import { BlogContext } from "../contexts/BlogContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 const theme = createTheme();
+const inputValues = {
+  title: "",
+  content: "",
+  imageUrl: "",
 
-// const inputValues = {
-//   title: "",
-//   content: "",
-//   imageUrl: "",
+}
 
-// }
+export default function NewBlog() {
+  const {info,setInfo,handleFormSubmit} = useContext(BlogContext);
+  const {currentUser} = useContext(AuthContext);
+  const [inputVal,setInputVal] = React.useState(inputValues)
 
-const NewBlog = () => {
+  const email = "email"
+  const favorites = "favorites"
+  const date = "date"
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    const {name,value}=e.target
+    setInfo({...info,[name]:value,[email]:currentUser?.email,[favorites]:0,[date]:new Date().toLocaleString("tr-TR")})
+    setInputVal({...inputVal,[name]:value})
+  };
+  
+  
+  const handleFormReset = (e) => {
+    e.preventDefault();
+    handleFormSubmit(e)
+    setInputVal(inputValues)
+  }
+  
   return (
     <div  style={{
       backgroundImage: 'url(https://source.unsplash.com/random)',
@@ -57,9 +83,9 @@ const NewBlog = () => {
               name="title"
               autoComplete="title"
               autoFocus
-              
+              onChange={handleChange}
               color="success"
-              
+              value={inputVal.title}
             />
             <TextField
               margin="normal"
@@ -69,9 +95,9 @@ const NewBlog = () => {
               label="Image URL"
               type="url"
               id="imageUrl"
-              
+              onChange={handleChange}
               color="success"
-              
+              value={inputVal.imageUrl}
             />
             
             <TextField
@@ -84,10 +110,10 @@ const NewBlog = () => {
               name="content"
               label="Content"
               id="content"
-              
+              onChange={handleChange}
               sx={{}}
               color="success"
-              
+              value={inputVal.content}
             />
             
             <Button
@@ -95,7 +121,7 @@ const NewBlog = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2,backgroundColor:"darkslategrey" }}
-              
+              onClick={(e)=>handleFormReset(e)}
             >
               Add Blog
             </Button>
@@ -107,5 +133,3 @@ const NewBlog = () => {
     </div>
   );
 }
-
-export default NewBlog

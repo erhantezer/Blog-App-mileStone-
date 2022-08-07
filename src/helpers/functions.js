@@ -1,20 +1,25 @@
-import { toastSuccessNotify } from "./ToastNotify";
+
 import { getDatabase,ref,push,set,onValue, remove,update } from "firebase/database";
 import { useState } from 'react';
 import { useEffect } from 'react';
+import {toastSuccessNotify}  from "./ToastNotify";
 
-export const AddBlog = (info) => {
-    const db = getDatabase();
-    const blogRef = ref(db,"blog");
-    const newBlogRef = push(blogRef);
-    set((newBlogRef), {
-        title:info.title,
-        imageUrl:info.imageUrl,
-        email:info.email,
-        content:info.date,
-        favorites:info.favorites
-    });
-    toastSuccessNotify("Add blog successfully")
+
+export const AddBlog=(info)=>{
+  const db = getDatabase();
+  const blogRef = ref(db,"blog");
+  const newBlogRef= push(blogRef);
+  set((newBlogRef),{
+    title: info.title,
+    imageUrl: info.imageUrl,
+    email: info.email,
+    content: info.content,
+    date: info.date,
+    favorites: info.favorites
+  })
+  toastSuccessNotify("Add blog successfully")
+  
+  
 }
 
 export const useFetch = ()=>{
@@ -29,7 +34,8 @@ export const useFetch = ()=>{
             const blogArr = [];
             for(let id in data){
                 blogArr.push({
-                    id, ...data[id]
+                    id,
+                    ...data[id]
                 })
             }
             setBlogList(blogArr);
@@ -54,6 +60,7 @@ export const UpdateBlog = (info)=>{
     toastSuccessNotify("Update blog successfully");
     return update(ref(db), updates);
 }
+
 export const updateFavorites = (info)=>{
     const db= getDatabase();
     const updates = {}
