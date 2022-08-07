@@ -13,7 +13,7 @@ import { useContext } from 'react';
 import { logOut } from '../helpers/firebase';
 
 export default function NavBar() {
-  const currentUser = useContext(AuthContext);
+  const {currentUser} = useContext(AuthContext);
   const navigate = useNavigate()
   // const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -50,7 +50,7 @@ export default function NavBar() {
       <AppBar position="static" style={{cursor:"pointer"}} sx={{backgroundColor:"darkslategray"}}>
         <Toolbar>
             <Typography variant="h6" color="inherit" sx={{ flexGrow: 3,textAlign:"left"}} style={{marginLeft:"0px"}} onClick={()=>navigate("/")} >
-              Erhan Tezer Blog's
+              Erhan TEZER Blog's
             </Typography>
           
           {currentUser ? (
