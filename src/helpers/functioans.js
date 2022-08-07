@@ -16,3 +16,27 @@ export const AddBlog = (info) => {
     });
     toastSuccessNotify("Add blog successfully")
 }
+
+export const useFetch = ()=>{
+    const [isLoading,setIsLoading] = useState();
+    const [blogList,setBlogList] =useState()
+    useEffect(()=>{
+        setIsLoading(true);
+        const db = getDatabase();
+        const blogRef = ref(db,"blog");
+        onValue(blogRef,(snapshot)=>{
+            const data = snapshot.val();
+            const blogArr = [];
+            for(let id in data){
+                blogArr.push({
+                    id, ...data[id]
+                })
+            }
+            setBlogList(blogArr);
+            console.log(data);
+            setIsLoading(false);
+        })
+
+    },[])
+    return {isLoading,blogList}
+}
