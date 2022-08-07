@@ -7,7 +7,7 @@ export const AddBlog = (info) => {
     const db = getDatabase();
     const blogRef = ref(db,"blog");
     const newBlogRef = push(blogRef);
-    Set((newBlogRef), {
+    set((newBlogRef), {
         title:info.title,
         imageUrl:info.imageUrl,
         email:info.email,
@@ -39,4 +39,27 @@ export const useFetch = ()=>{
 
     },[])
     return {isLoading,blogList}
+}
+
+export const DeleteBlog = (id)=>{
+    const db= getDatabase();
+    remove(ref(db,"blog/"+id));
+    toastSuccessNotify("Delete blog successfully");
+}
+
+export const UpdateBlog = (info)=>{
+    const db= getDatabase();
+    const updates = {}
+    updates['/blog/'+info.id]=info;
+    toastSuccessNotify("Update blog successfully");
+    return update(ref(db), updates);
+}
+export const updateFavorites = (info)=>{
+    const db= getDatabase();
+    const updates = {}
+    console.log(info)
+    console.log(info.favorites)
+    updates['/blog/'+info.id]={...info,
+    favorites: info.favorites+1};
+    return update(ref(db), updates);
 }
