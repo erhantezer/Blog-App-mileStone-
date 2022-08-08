@@ -9,10 +9,14 @@ function App() {
   return (
     <div className="App">
       <AuthContextProvider>
+
         <BlogContextProvider>
+
         <AppRouter/>
         <ToastContainer />
+        
         </BlogContextProvider>
+
       </AuthContextProvider>
      
     </div>
