@@ -65,6 +65,7 @@ export default function UpdateBlog() {
           <Typography component="h1" variant="h5" sx={{color: 'darkslategray',letterSpacing:"3px",fontFamily: 'fantasy',marginTop:"10px"}}>
             New Blog
     </Typography>
+    
             <TextField
               margin="normal"
               required
