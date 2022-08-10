@@ -7,8 +7,7 @@ export const AuthContext = createContext()
 const AuthContextProvider= (props) => {
     const [currentUser, setCurrentUser] = useState();
     useEffect(() => {
-        userObserver(setCurrentUser)
-        
+        userObserver(setCurrentUser)    
     },[])
     return (
         <AuthContext.Provider value={{currentUser}}>
