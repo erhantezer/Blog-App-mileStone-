@@ -62,6 +62,7 @@ export default function NavBar() {
         </Typography>)}
           
             <div>
+
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -121,6 +122,7 @@ export default function NavBar() {
                 <MenuItem onClick={(e)=>handleClose(e)}>Register</MenuItem>
                 <MenuItem onClick={(e)=>handleClose(e)}>About</MenuItem>
               </Menu>)}
+              
             </div>
           
         </Toolbar>
